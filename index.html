@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Willard Van Orman Quine - Filósofo y Lógico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .nav-pills {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .nav-pill {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+        }
+
+            .nav-pill:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 2rem 0;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+            .section:nth-child(odd) {
+                animation-delay: 0.2s;
+            }
+
+            .section:nth-child(even) {
+                animation-delay: 0.4s;
+            }
+
+        h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+            h2::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80px;
+                height: 3px;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                border-radius: 2px;
+            }
+
+        h3 {
+            font-size: 1.8rem;
+            color: #34495e;
+            margin: 2rem 0 1rem 0;
+            padding-left: 1rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .quote {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-left: 5px solid #667eea;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            font-style: italic;
+            font-size: 1.1rem;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+            .quote::before {
+                content: '"';
+                font-size: 4rem;
+                color: #667eea;
+                position: absolute;
+                top: -10px;
+                left: 20px;
+                opacity: 0.3;
+            }
+
+        .quote-author {
+            text-align: right;
+            margin-top: 1rem;
+            font-weight: bold;
+            color: #5a6c7d;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+            .timeline::before {
+                content: '';
+                position: absolute;
+                left: 1rem;
+                top: 0;
+                bottom: 0;
+                width: 2px;
+                background: linear-gradient(180deg, #667eea, #764ba2);
+            }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+            .timeline-item::before {
+                content: '';
+                position: absolute;
+                left: -2.5rem;
+                top: 1.5rem;
+                width: 12px;
+                height: 12px;
+                background: #667eea;
+                border-radius: 50%;
+                border: 3px solid white;
+                box-shadow: 0 0 0 3px #667eea;
+            }
+
+        .year {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .book-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+            .book-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            }
+
+        .book-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-year {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .book-description {
+            color: #5a6c7d;
+            margin-bottom: 1.5rem;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .link-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+            .link-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            }
+
+        .influences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .influence-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+            .influence-card:hover {
+                transform: translateY(-3px);
+            }
+
+        .influence-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .influence-description {
+            color: #5a6c7d;
+            font-size: 0.9rem;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .resource-card {
+            background: linear-gradient(135deg, #ffffff, #f1f3f4);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        .resource-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .resource-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .resource-link {
+            display: inline-block;
+            color: #667eea;
+            text-decoration: none;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+            transition: all 0.3s ease;
+        }
+
+            .resource-link:hover {
+                color: #764ba2;
+                border-bottom-color: #764ba2;
+                padding-left: 10px;
+            }
+
+        .footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            margin-top: 3rem;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .section {
+                padding: 2rem 1.5rem;
+            }
+
+            .nav-pills {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+            .scroll-to-top.visible {
+                opacity: 1;
+            }
+
+            .scroll-to-top:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Willard Van Orman Quine</h1>
+            <p class="subtitle">Filósofo, Lógico y Matemático (1908-2000)</p>
+            <nav class="nav-pills">
+                <a href="#biografia" class="nav-pill">Biografía</a>
+                <a href="#pensamiento" class="nav-pill">Pensamiento</a>
+                <a href="#obras" class="nav-pill">Obras Principales</a>
+                <a href="#influencias" class="nav-pill">Influencias</a>
+                <a href="#contexto" class="nav-pill">Contexto Histórico</a>
+                <a href="#recursos" class="nav-pill">Recursos</a>
+            </nav>
+        </header>
+
+        <section id="biografia" class="section">
+            <h2>Biografía</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="year">1908</div>
+                    <p>Nace el 25 de junio en Akron, Ohio. Hijo de Cloyd Robert Quine y Harriett Ellis Quine.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1930</div>
+                    <p>Se gradúa summa cum laude en matemáticas en el Oberlin College.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1932</div>
+                    <p>Obtiene su doctorado en filosofía en Harvard con una tesis sobre lógica matemática bajo la dirección de Alfred North Whitehead.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1933-1934</div>
+                    <p>Viaja a Europa con una beca Sheldon, donde conoce a Rudolf Carnap, Alfred Tarski y otros miembros del Círculo de Viena.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1936</div>
+                    <p>Se convierte en profesor junior en Harvard, donde permanecería toda su carrera académica.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1951</div>
+                    <p>Publica "Dos dogmas del empirismo", uno de los artículos más influyentes de la filosofía del siglo XX.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1960</div>
+                    <p>Publica "Palabra y objeto", su obra magna sobre filosofía del lenguaje.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1970</div>
+                    <p>Se jubila de Harvard como profesor emérito Edgar Pierce de Filosofía.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2000</div>
+                    <p>Muere el 25 de diciembre en Boston a los 92 años, dejando un legado fundamental en la filosofía analítica.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pensamiento" class="section">
+            <h2>Pensamiento Filosófico</h2>
+
+            <h3>Los Dos Dogmas del Empirismo</h3>
+            <p>Quine revolucionó la filosofía analítica al cuestionar dos pilares fundamentales del positivismo lógico:</p>
+
+            <div class="quote">
+                La distinción entre verdades analíticas y sintéticas es un dogma del empirismo, un artículo de fe metafísica
+                <div class="quote-author">— Dos dogmas del empirismo (1951)</div>
+            </div>
+
+            <p>Su crítica se centra en:</p>
+            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                <li><strong>La distinción analítico/sintético:</strong> Argumenta que no existe una distinción clara entre verdades analíticas (verdaderas por significado) y sintéticas (verdaderas por hechos empíricos).</li>
+                <li><strong>El reduccionismo:</strong> Rechaza la idea de que cada enunciado tenga su propio rango de experiencias confirmatorias.</li>
+            </ul>
+
+            <h3>Holismo Semántico</h3>
+            <div class="quote">
+                Nuestros enunciados sobre el mundo externo se enfrentan al tribunal de la experiencia sensible no individualmente sino como un cuerpo corporativo
+                <div class="quote-author">— Dos dogmas del empirismo (1951)</div>
+            </div>
+
+            <p>Quine propone que el conocimiento forma una "red de creencias" donde cualquier enunciado puede ser revisado si es necesario para mantener la coherencia del sistema total.</p>
+
+            <h3>Indeterminación de la Traducción</h3>
+            <div class="quote">
+                Los manuales para traducir un idioma a otro pueden ser establecidos de maneras divergentes, todas compatibles con la totalidad de las disposiciones verbales, y sin embargo incompatibles entre sí
+                <div class="quote-author">— Palabra y objeto (1960)</div>
+            </div>
+
+            <p>Esta tesis sostiene que la traducción entre idiomas es fundamentalmente indeterminada, lo que tiene profundas implicaciones para nuestra comprensión del significado y la comunicación.</p>
+
+            <h3>Relativismo Ontológico</h3>
+            <div class="quote">
+                Ser es ser el valor de una variable
+                <div class="quote-author">— Sobre lo que hay (1948)</div>
+            </div>
+
+            <p>Quine argumenta que las preguntas sobre qué existe solo tienen sentido relativo a un esquema conceptual particular.</p>
+
+            <h3>Naturalismo Metodológico</h3>
+            <p>Defiende la continuidad entre filosofía y ciencia, argumentando que la epistemología debe ser naturalizada y estudiada como parte de la psicología empírica.</p>
+
+            <div class="quote">
+                La epistemología naturalizada abandona el objetivo del primer filosofo de una fundamentación más firme para la ciencia que la ciencia misma, y se conforma con la fundamentación en la propia ciencia
+                <div class="quote-author">— Epistemología naturalizada (1969)</div>
+            </div>
+        </section>
+
+        <section id="obras" class="section">
+            <h2>Obras Principales</h2>
+            <div class="books-grid">
+                <div class="book-card">
+                    <div class="book-title">Métodos de Lógica</div>
+                    <div class="book-year">1950</div>
+                    <div class="book-description">Manual fundamental de lógica matemática que se convirtió en texto estándar universitario durante décadas.</div>
+                    <div class="links">
+                        <a href="https://www.amazon.es/Methods-Logic-W-Quine/dp/0674571762" class="link-btn" target="_blank">Amazon</a>
+                        <a href="https://archive.org/search.php?query=quine+methods+logic" class="link-btn" target="_blank">Archive.org</a>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-title">Dos Dogmas del Empirismo</div>
+                    <div class="book-year">1951</div>
+                    <div class="book-description">Ensayo revolucionario que critica los fundamentos del positivismo lógico y propone el holismo semántico.</div>
+                    <div class="links">
+                        <a href="https://www.amazon.es/s?k=quine+dos+dogmas+empirismo" class="link-btn" target="_blank">Amazon</a>
+                        <a href="https://archive.org/search.php?query=quine+two+dogmas" class="link-btn" target="_blank">Archive.org</a>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-title">Palabra y Objeto</div>
+                    <div class="book-year">1960</div>
+                    <div class="book-description">Su obra magna sobre filosofía del lenguaje, donde desarrolla la tesis de la indeterminación de la traducción.</div>
+                    <div class="links">
+                        <a href="https://www.amazon.es/Palabra-objeto-Willard-Van-Quine/dp/8423207293" class="link-btn" target="_blank">Amazon</a>
+                        <a href="https://archive.org/search.php?query=quine+word+object" class="link-btn" target="_blank">Archive.org</a>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-title">Ontological Relativity</div>
+                    <div class="book-year">1969</div>
+                    <div class="book-description">Colección de ensayos que incluye "Epistemología naturalizada" y desarrolla su relativismo ontológico.</div>
+                    <div class="links">
+                        <a href="https://www.amazon.es/s?k=quine+ontological+relativity" class="link-btn" target="_blank">Amazon</a>
+                        <a href="https://archive.org/search.php?query=quine+ontological+relativity" class="link-btn" target="_blank">Archive.org</a>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-title">Filosofía de la Lógica</div>
+                    <div class="book-year">1970</div>
+                    <div class="book-description">Reflexiones fundamentales sobre la naturaleza de la lógica y su relación con el lenguaje y la realidad.</div>
+                    <div class="links">
+                        <a href="https://www.amazon.es/s?k=quine+filosofia+logica" class="link-btn" target="_blank">Amazon</a>
+                        <a href="https://archive.org/search.php?query=quine+philosophy+logic" class="link-btn" target="_blank">Archive.org</a>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-title">Las Raíces de la Referencia</div>
+                    <div class="book-year">1973</div>
+                    <div class="book-description">Conferencias donde explora los orígenes del lenguaje y el desarrollo de la capacidad referencial.</div>
+                    <div class="links">
+                        <a href="https://www.amazon.es/s?k=quine+roots+reference" class="link-btn" target="_blank">Amazon</a>
+                        <a href="https://archive.org/search.php?query=quine+roots+reference" class="link-btn" target="_blank">Archive.org</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="influencias" class="section">
+            <h2>Influencias y Legado</h2>
+
+            <h3>Influencias Recibidas</h3>
+            <div class="influences-grid">
+                <div class="influence-card">
+                    <div class="influence-name">Alfred North Whitehead</div>
+                    <div class="influence-description">Su director de tesis en Harvard, co-autor de los Principia Mathematica</div>
+                </div>
+                <div class="influence-card">
+                    <div class="influence-name">Rudolf Carnap</div>
+                    <div class="influence-description">Miembro del Círculo de Viena, influyó en sus primeros trabajos sobre lógica</div>
+                </div>
+                <div class="influence-card">
+                    <div class="influence-name">Alfred Tarski</div>
+                    <div class="influence-description">Lógico polaco, influyó en su concepción de la verdad y la semántica</div>
+                </div>
+                <div class="influence-card">
+                    <div class="influence-name">John Dewey</div>
+                    <div class="influence-description">Pragmatista estadounidense, influyó en su naturalismo metodológico</div>
+                </div>
+                <div class="influence-card">
+                    <div class="influence-name">Bertrand Russell</div>
+                    <div class="influence-description">Filósofo británico, influyó en su trabajo en lógica matemática</div>
+                </div>
+                <div class="influence-card">
+                    <div class="influence-name">Otto Neurath</div>
+                    <div class="influence-description">Positivista lógico, influyó en sus ideas sobre el holismo semántico</div>
+                </div>
+            </div>
+
+            <h3>Influencias Ejercidas</h3>
+            <div class="influences-grid">
+                <div class="influence-card">
+                    <div class="influence-name">Donald Davidson</div>
+                    <div class="influence-description">Desarrolló la semántica de condiciones de verdad basándose en ideas quineanas</div>
+                </div>
+                <div class="influence-card">
+                    <div class="influence-name">Daniel Dennett</div>
+                    <div class="influence-description">Filósofo de la mente, adoptó el naturalismo metodológico de Quine</div>
+                </div>
+                <div class="influence-card">
+                    <div class="influence-name">Hilary Putnam</div>
+                    <div class="influence-description">Desarrolló el funcionalismo en filosofía de la mente siguiendo líneas quineanas</div>
+                </div>
+                <div class="influence-card">
+                    <div class="influence-name">Paul Churchland</div>
+                    <div class="influence-description">Materialista eliminativo, influenciado por el naturalismo de Quine</div>
+                </div>
+                <div class="influence-card">
+                    <div class="influence-name">Saul Kripke</div>
+                    <div class="influence-description">Aunque crítico, desarrolló sus ideas sobre necesidad respondiendo a Quine</div>
+                </div>
+                <div class="influence-card">
+                    <div class="influence-name">Tyler Burge</div>
+                    <div class="influence-description">Filósofo del lenguaje, desarrolló el externalismo semántico partir de Quine</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contexto" class="section">
+            <h2>Contexto Histórico y Filosófico</h2>
+
+            <h3>El Positivismo Lógico (1920-1950)</h3>
+            <p>Quine surgió en el contexto del positivismo lógico del Círculo de Viena, un movimiento que buscaba aplicar métodos científicos rigurosos a la filosofía. Los positivistas defendían:</p>
+            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                <li>La distinción analítico/sintético como fundamental</li>
+                <li>El reduccionismo: cada enunciado tiene su propio contenido empírico</li>
+                <li>La verificabilidad como criterio de significado</li>
+                <li>La unidad de la ciencia bajo métodos lógico-matemáticos</li>
+            </ul>
+
+            <div class="quote">
+                El positivismo lógico ha tenido sus días. Tanto los dogmas del empirismo como los esquemas reduccionistas asociados con él están siendo abandonados
+                <div class="quote-author">— Ontología y compromiso ontológico (1951)</div>
+            </div>
+
+            <h3>La Revolución Analítica</h3>
+            <p>El trabajo de Quine fue fundamental en la transición del positivismo lógico a la filosofía analítica contemporánea. Su influencia se extendió a:</p>
+            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                <li><strong>Filosofía del lenguaje:</strong> Sus ideas sobre indeterminación influyeron en debates sobre traducción y significado</li>
+                <li><strong>Epistemología:</strong> Su naturalismo metodológico cambió el enfoque epistemológico</li>
+                <li><strong>Metafísica:</strong> Su relativismo ontológico redefinió preguntas sobre la existencia</li>
+                <li><strong>Filosofía de la ciencia:</strong> Su holismo influyó en teorías sobre confirmación y cambio teórico</li>
+            </ul>
+
+            <h3>Contexto Científico del Siglo XX</h3>
+            <p>Las ideas de Quine se desarrollaron en un período de revoluciones científicas:</p>
+            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                <li><strong>Física cuántica:</strong> Cuestionó conceptos clásicos de realidad y observación</li>
+                <li><strong>Relatividad:</strong> Mostró la dependencia contextual de conceptos fundamentales</li>
+                <li><strong>Psicología conductista:</strong> Influyó en su enfoque naturalista del comportamiento verbal</li>
+                <li><strong>Ciencias cognitivas emergentes:</strong> Proporcionaron nuevas perspectivas sobre mente y lenguaje</li>
+            </ul>
+
+            <h3>Impacto en la Filosofía Contemporánea</h3>
+            <p>Las ideas de Quine siguen siendo fundamentales en debates filosóficos actuales:</p>
+            <ul style="margin: 1rem 0; padding-left: 2rem;">
+                <li><strong>Filosofía de la mente:</strong> Su naturalismo influyó en el desarrollo de teorías materialistas</li>
+                <li><strong>Filosofía del lenguaje:</strong> Sus ideas sobre traducción radical siguen siendo debatidas</li>
+                <li><strong>Epistemología naturalizada:</strong> Continúa siendo una corriente importante</li>
+                <li><strong>Pragmatismo contemporáneo:</strong> Su holismo influyó en filósofos como Rorty y Sellars</li>
+            </ul>
+        </section>
+
+        <section id="recursos" class="section">
+            <h2>Recursos y Enlaces</h2>
+
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-title">Recursos Académicos</div>
+                    <div class="resource-links">
+                        <a href="https://www.academia.edu/search?q=W.V.O.%20Quine" class="resource-link" target="_blank">Academia.edu - Artículos sobre Quine</a>
+                        <a href="https://philpapers.org/browse/quine" class="resource-link" target="_blank">PhilPapers - Bibliografía completa</a>
+                        <a href="https://plato.stanford.edu/entries/quine/" class="resource-link" target="_blank">Stanford Encyclopedia - W.V. Quine</a>
+                        <a href="https://iep.utm.edu/quine/" class="resource-link" target="_blank">Internet Encyclopedia of Philosophy</a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">Wikipedia y Enciclopedias</div>
+                    <div class="resource-links">
+                        <a href="https://es.wikipedia.org/wiki/Willard_van_Orman_Quine" class="resource-link" target="_blank">Wikipedia en Español</a>
+                        <a href="https://en.wikipedia.org/wiki/W._V._O._Quine" class="resource-link" target="_blank">Wikipedia en Inglés</a>
+                        <a href="https://www.britannica.com/biography/Willard-Van-Orman-Quine" class="resource-link" target="_blank">Encyclopædia Britannica</a>
+                        <a href="https://www.biography.com/scholars/willard-van-orman-quine" class="resource-link" target="_blank">Biography.com</a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">Textos Libres</div>
+                    <div class="resource-links">
+                        <a href="https://archive.org/search.php?query=creator%3A%22Quine%2C+W.+V.+O.%22" class="resource-link" target="_blank">Archive.org - Obras de Quine</a>
+                        <a href="https://www.gutenberg.org/ebooks/search/?query=quine" class="resource-link" target="_blank">Project Gutenberg</a>
+                        <a href="https://openlibrary.org/authors/OL378264A/W._V._O._Quine" class="resource-link" target="_blank">Open Library</a>
+                        <a href="https://www.jstor.org/action/doBasicSearch?Query=W.V.O.+Quine" class="resource-link" target="_blank">JSTOR - Artículos académicos</a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">Tiendas Online (Español)</div>
+                    <div class="resource-links">
+                        <a href="https://www.amazon.es/s?k=quine+filosofia&language=es_ES" class="resource-link" target="_blank">Amazon España - Obras de Quine</a>
+                        <a href="https://www.casadellibro.com/libros-ebooks/w-v-o-quine/102442" class="resource-link" target="_blank">Casa del Libro</a>
+                        <a href="https://www.fnac.es/SearchResult/ResultList.aspx?Search=quine&SCat=0%211" class="resource-link" target="_blank">Fnac España</a>
+                        <a href="https://www.agapea.com/libros/quine-isbn-b.php" class="resource-link" target="_blank">Agapea</a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">Recursos Audiovisuales</div>
+                    <div class="resource-links">
+                        <a href="https://www.youtube.com/results?search_query=W.V.O.+Quine+philosophy" class="resource-link" target="_blank">YouTube - Conferencias y documentales</a>
+                        <a href="https://www.coursera.org/search?query=analytic%20philosophy" class="resource-link" target="_blank">Coursera - Cursos de Filosofía Analítica</a>
+                        <a href="https://podcasts.apple.com/search?term=quine%20philosophy" class="resource-link" target="_blank">Podcasts sobre Filosofía</a>
+                    </div>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">Centros de Investigación</div>
+                    <div class="resource-links">
+                        <a href="https://philosophy.harvard.edu/" class="resource-link" target="_blank">Harvard Philosophy Department</a>
+                        <a href="https://www.harvardmagazine.com/2001/01/w-v-o-quine.html" class="resource-link" target="_blank">Harvard Magazine - Obituario</a>
+                        <a href="https://www.ams.org/notices/200108/fea-quine.pdf" class="resource-link" target="_blank">American Mathematical Society</a>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Principales Obras Disponibles en Español</h3>
+            <div class="books-grid">
+                <div class="book-card">
+                    <div class="book-title">Palabra y Objeto</div>
+                    <div class="book-description">Traducido por Manuel Sacristán. Editorial Labor, Barcelona.</div>
+                    <div class="links">
+                        <a href="https://www.amazon.es/Palabra-objeto-Willard-Van-Quine/dp/8423207293" class="link-btn" target="_blank">Comprar en Amazon</a>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-title">Desde un Punto de Vista Lógico</div>
+                    <div class="book-description">Incluye "Dos dogmas del empirismo". Editorial Orbis, Barcelona.</div>
+                    <div class="links">
+                        <a href="https://www.amazon.es/s?k=quine+desde+punto+vista+logico" class="link-btn" target="_blank">Buscar en Amazon</a>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-title">Filosofía de la Lógica</div>
+                    <div class="book-description">Traducción de Manuel Sacristán. Alianza Editorial.</div>
+                    <div class="links">
+                        <a href="https://www.amazon.es/s?k=quine+filosofia+logica+alianza" class="link-btn" target="_blank">Buscar en Amazon</a>
+                    </div>
+                </div>
+
+                <div class="book-card">
+                    <div class="book-title">Las Raíces de la Referencia</div>
+                    <div class="book-description">Conferencias Paul Carus. Editorial Revista de Occidente.</div>
+                    <div class="links">
+                        <a href="https://www.amazon.es/s?k=quine+raices+referencia" class="link-btn" target="_blank">Buscar en Amazon</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer">
+            <p>Esta página está dedicada al estudio y difusión del pensamiento de W.V.O. Quine</p>
+            <p>Los enlaces a recursos externos se proporcionan únicamente con fines educativos</p>
+            <p>© 2025 - Página educativa sobre filosofía analítica</p>
+        </div>
+    </div>
+
+    <button class="scroll-to-top" id="scrollToTop">↑</button>
+
+    <script>
+        // Smooth scrolling para los enlaces de navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Botón de scroll to top
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Animación de entrada para las secciones
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observar todas las secciones
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Efecto de paralaje suave en el header
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('header');
+            if (header) {
+                header.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Highlight del enlace activo en la navegación
+        const navLinks = document.querySelectorAll('.nav-pill');
+        const sections = document.querySelectorAll('.section');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Añadir clase active al CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            .nav-pill.active {
+                background: rgba(255, 255, 255, 0.4);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Animación de escritura para el título
+        const titleElement = document.querySelector('h1');
+        const titleText = titleElement.textContent;
+        titleElement.textContent = '';
+
+        let i = 0;
+        const typeWriter = () => {
+            if (i < titleText.length) {
+                titleElement.textContent += titleText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        };
+
+        // Iniciar la animación después de un breve delay
+        setTimeout(typeWriter, 500);
+    </script>
+</body>
+</html>
