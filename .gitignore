@@ -11,3 +11,7 @@
 /.vs/quine/CopilotIndices/17.14.734.62261/SemanticSymbols.db-wal
 *.vsidx
 *.config
+.vs/VSWorkspaceState.json
+.vs/quine/v17/.wsuo
+.vs/quine/v17/DocumentLayout.json
+.gitignore
